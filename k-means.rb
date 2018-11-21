@@ -1,4 +1,4 @@
-require 'csv'
+require 'csv', 'math'
 
 class Centroide
     attr_accessor :posX,:posY
@@ -8,8 +8,9 @@ class Centroide
         @posY = 0
     end
 
-    def mover
-        #todo
+    def mover(sum,cont)
+        @posX = sum[0] / cont
+        @posY = sum[1] / cont
     end
 end
 
@@ -27,14 +28,12 @@ class Nodo
 
     def calcCentCercano(arrayCentroides)
         #calcula la distacia entre tu posicion y la de los 3 centroides
-        menorDist = nil
-        cluster = nil
+        menorDist = Integer.sqrt(((@sepal_length - arrayCentroides[0].x)**2) + ((@sepal_width - arrayCentroides[0].y))**2)
+        cluster = 0
 
-        for i in 0..2
-            #arreglar calculo de distancia
-            arrayCentroides[i].x
-            arrayCentroides[i].y
-
+        for i in 1..2
+            dist = Integer.sqrt(((@sepal_length - arrayCentroides[i].x)**2) + ((@sepal_width - arrayCentroides[i].y))**2)
+            
             if dist < menorDist
                 menorDist = dist
                 cluster = i
@@ -57,8 +56,8 @@ class AlmacenCentroides < Centroide
       for i in 0..2 #mejorar el random
         centroide = Centroide.new()
         rnd = Random.new
-        centroide.posX = rnd.rand(100)
-        centroide.posY = rnd.rand(100)
+        centroide.posX = rnd.rand(15)
+        centroide.posY = rnd.rand(15)
         arrayCentroides.push(centroide)
       end
     end
