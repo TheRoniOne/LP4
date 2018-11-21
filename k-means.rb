@@ -25,7 +25,7 @@ class Nodo
         @cluster = nil
     end
 
-    def calcCentCercano
+    def calcCentCercano(arrayCentroides)
         #calcula la distacia entre tu posicion y la de los 3 centroides
         menorDist = nil
         cluster = nil
@@ -42,13 +42,13 @@ class Nodo
         end
 
         @cluster = cluster
-
-        return menorDist
     end
 
 end
 
 class AlmacenCentroides < Centroide
+    attr_accessor :arrayCentroides
+
     def initialize
         arrayCentroides = Array.new(3)
     end
@@ -81,10 +81,10 @@ class Almacen
         end
     end
 
-    def calcDistancias() #ponerle un mejor nombre
-        sum1 = 0
-        sum2 = 0
-        sum3 = 0
+    def calcDistancias(arrayCentroides) #ponerle un mejor nombre a la funcion
+        sum1 = Array.new(2)
+        sum2 = Array.new(2)
+        sum3 = Array.new(2)
 
         cont1 = 0
         cont2 = 0
@@ -92,26 +92,29 @@ class Almacen
 
         #llama a calcCentCercano de cada nodo
         arrayNodos.each do |i|
-            aux = i.calcCentCercano()
+            i.calcCentCercano(arrayCentroides)
             if i.cluster == 0
-                sum1 += aux
+                sum1[0] += i.sepal_length
+                sum1[1] += i.sepal_width
                 cont1 +=1
             elsif i.cluster == 1
-                sum2 += aux
+                sum2[0] += i.sepal_length
+                sum2[1] += i.sepal_width
                 cont2 +=1
             else
-                sum3 += aux
+                sum3[0] += i.sepal_length
+                sum3[1] += i.sepal_width
                 cont3 +=1
             end
         end
 
         #llamar a la funcion mover de los centroides
         if cont1 > 0
-            centroide1.mover
+            centroide1.mover()
         if cont2 > 0
-            centroide2.mover
+            centroide2.mover()
         if cont3 > 0
-            centroide3.mover
+            centroide3.mover()
         
     end
 end
@@ -126,7 +129,7 @@ def main()
     almacenCentroides.generarCentroides
 
     while (almacenCentroides[i].posX == posAntX and #haz bucle hasta que todo centroide deje de moverse
-        almacen.calcDistancias
+        almacen.calcDistancias(almacenCentroides.arrayCentroides)
         contIt +=1
     end
     
