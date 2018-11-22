@@ -1,7 +1,7 @@
 require 'csv', 'math'
 
 class Centroide
-    attr_accessor :posX,:posY
+    attr_accessor :posX, :posY
 
     def initialize()
         @posX = 0
@@ -15,7 +15,7 @@ class Centroide
 end
 
 class Nodo
-    attr_accessor :cluster
+    attr_accessor :sepal_length, :sepal_width, :petal_length , :petal_width, :species, :cluster
 
     def initialize()
         @sepal_length = 0
@@ -53,7 +53,7 @@ class AlmacenCentroides < Centroide
     end
 
     def generarCentroides
-      for i in 0..2 #mejorar el random
+      for i in 0..2
         centroide = Centroide.new()
         rnd = Random.new
         centroide.posX = rnd.rand(15)
@@ -63,7 +63,7 @@ class AlmacenCentroides < Centroide
     end
 end
 
-class Almacen
+class Almacen < Nodo
     def initialize()
         arrayNodos = Array.new()
     end
@@ -109,11 +109,16 @@ class Almacen
 
         #llamar a la funcion mover de los centroides
         if cont1 > 0
-            centroide1.mover()
+            centroide1.mover(sum1,cont1)
+        end
+
         if cont2 > 0
-            centroide2.mover()
+            centroide2.mover(sum2,cont2)
+        end
+
         if cont3 > 0
-            centroide3.mover()
+            centroide3.mover(sum3,cont3)
+        end
         
     end
 end
@@ -124,11 +129,33 @@ def main()
 
     contIt = 0
 
+    posAntX0 = nil
+    posAntY0 = nil
+
+    posAntX1 = nil
+    posAntY1 = nil
+
+    posAntX2 = nil
+    posAntY2 = nil
+
     almacenCentroides = AlmacenCentroides.new
     almacenCentroides.generarCentroides
 
-    while (almacenCentroides[i].posX == posAntX and #haz bucle hasta que todo centroide deje de moverse
+    while (((almacenCentroides[0].posX != posAntX0) or (almacenCentroides[0].posY != posAntY0)) or ((almacenCentroides[1].posX != posAntX1) or (almacenCentroides[1].posY != posAntY1)) or ((almacenCentroides[2].posX != posAntX2) or (almacenCentroides[2].posY != posAntY2)))   #haz bucle hasta que todo centroide deje de moverse
+        #guarda la posicion de cada centroide antes de realizar operaciones
+        posAntX0 = almacenCentroides[0].posX 
+        posAntY0 = almacenCentroides[0].posY
+
+        posAntX1 = almacenCentroides[1].posX
+        posAntY1 = almacenCentroides[1].posY
+
+        posAntX2 = almacenCentroides[2].posX
+        posAntY2 = almacenCentroides[2].posY
+
+        #realiza operaciones 
         almacen.calcDistancias(almacenCentroides.arrayCentroides)
+
+        #aumenta el contador de iteraciones en 1
         contIt +=1
     end
     
