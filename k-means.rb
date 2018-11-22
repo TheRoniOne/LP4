@@ -119,7 +119,9 @@ class Almacen < Nodo
         if cont3 > 0
             centroide3.mover(sum3,cont3)
         end
-        
+
+        return [cont1,cont2,cont3]
+
     end
 end
 
@@ -128,6 +130,7 @@ def main()
     almacen.generar
 
     contIt = 0
+    contadores = []
 
     posAntX0 = nil
     posAntY0 = nil
@@ -153,13 +156,17 @@ def main()
         posAntY2 = almacenCentroides.arrayCentroides[2].posY
 
         #realiza operaciones 
-        almacen.calcDistancias(almacenCentroides.arrayCentroides)
+        contadores = almacen.calcDistancias(almacenCentroides.arrayCentroides)
 
         #aumenta el contador de iteraciones en 1
         contIt +=1
     end
     
     puts "Proceso terminado luego de #{contIt.to_s} iteraciones."
+    puts "Hay #{contadores[0].to_s} nodos en el primer cluster"
+    puts "Hay #{contadores[1].to_s} nodos en el segundo cluster"
+    puts "Hay #{contadores[2].to_s} nodos en el tercer cluster"
+
 end
 
 if __FILE__ == $0
