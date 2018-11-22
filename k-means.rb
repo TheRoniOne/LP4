@@ -69,12 +69,12 @@ class Almacen < Nodo
     end
 
     def generar()
-        CSV.foreach("path/to/file.csv") do |row|
+        CSV.foreach("C:/Users/RoniD/Downloads/iris.csv") do |row|
             nodo = Nodo.new()
-            nodo.sepal_length = row[0]
-            nodo.sepal_width = row[1]
-            nodo.petal_length = row[2]
-            nodo.petal_width = row[3]
+            nodo.sepal_length = row[0].to_i
+            nodo.sepal_width = row[1].to_i
+            nodo.petal_length = row[2].to_i
+            nodo.petal_width = row[3].to_i
             nodo.species = row[4]
             arrayNodos.push(nodo)
         end
