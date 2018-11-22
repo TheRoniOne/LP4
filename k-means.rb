@@ -1,4 +1,5 @@
 require 'csv'
+require 'Time'
 
 class Centroide
     attr_accessor :posX, :posY
@@ -144,6 +145,8 @@ def main()
     almacenCentroides = AlmacenCentroides.new
     almacenCentroides.generarCentroides
 
+    start = Time.now
+
     while (((almacenCentroides.arrayCentroides[0].posX != posAntX0) or (almacenCentroides.arrayCentroides[0].posY != posAntY0)) or ((almacenCentroides.arrayCentroides[1].posX != posAntX1) or (almacenCentroides.arrayCentroides[1].posY != posAntY1)) or ((almacenCentroides.arrayCentroides[2].posX != posAntX2) or (almacenCentroides.arrayCentroides[2].posY != posAntY2)))   #haz bucle hasta que todo centroide deje de moverse
         #guarda la posicion de cada centroide antes de realizar operaciones
         posAntX0 = almacenCentroides.arrayCentroides[0].posX 
@@ -162,6 +165,10 @@ def main()
         contIt +=1
     end
     
+    fin = Time.now
+    dif = fin - start
+    puts dif.to_s
+
     puts "Proceso terminado luego de #{contIt.to_s} iteraciones."
     puts "Hay #{contadores[0].to_s} nodos en el primer cluster"
     puts "Hay #{contadores[1].to_s} nodos en el segundo cluster"
